@@ -1,0 +1,31 @@
+#modalServerBrowserBody ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#modalServerBrowserBody ul li {
+    margin: 4px;
+    padding: 4px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#modalServerBrowserBody ul li.folder {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+}
+
+#modalServerBrowserBody ul li.file {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.inlineLogViewer {
+    background-color: white;
+    height: 500px;
+    overflow-y: scroll;
+}

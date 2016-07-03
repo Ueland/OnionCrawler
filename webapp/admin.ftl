@@ -1,0 +1,1 @@
+[@includeTemplate name="admin/index.ftl"/]
