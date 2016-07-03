@@ -163,7 +163,6 @@ public class CrawlerTask implements Task {
             } else {
                 logger.error("Do not know how to handle anchor URL: \""+href+"\"");
             }
-            System.out.println("link:\t"+href);
         }
         return anchors;
     }

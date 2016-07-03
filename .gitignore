@@ -1,8 +1,10 @@
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-.idea/
+#IntelliJ config
+OnionCrawler.iml
+
+#Auto created Lucene index
+onionCrawler/lucene
 
 # Package Files #
 *.jar

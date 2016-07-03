@@ -8,6 +8,7 @@ import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import no.ueland.onionCrawler.services.http.HTTPFetcherService;
 import no.ueland.onionCrawler.services.search.SearchService;
 import no.ueland.onionCrawler.services.version.VersionService;
+import no.ueland.onionCrawler.tasks.AutoPopulatetoCrawlTask;
 import no.ueland.onionCrawler.tasks.CrawlerTask;
 import no.ueland.onionCrawler.tasks.Task;
 import no.ueland.onionCrawler.utils.OnionCrawlerServerUtil;
@@ -91,6 +92,8 @@ public class OnionCrawler {
         tasks = new ArrayList<>();
 
         tasks.add(new CrawlerTask());
+        tasks.add(new AutoPopulatetoCrawlTask());
+
         for(Task t : tasks) {
             try {
                 injector.injectMembers(t);
