@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.database.DatabaseService;
+import org.apache.log4j.Logger;
 
 /**
  * Created by TorHenning on 20.08.2015.
@@ -11,6 +12,7 @@ import no.ueland.onionCrawler.services.database.DatabaseService;
 @Singleton
 public class OnionHostServiceImpl implements OnionHostService {
 
+    private Logger logger = Logger.getLogger(getClass());
     @Inject
     private DatabaseService databaseService;
 
@@ -18,8 +20,10 @@ public class OnionHostServiceImpl implements OnionHostService {
     public void setStatus(String host, boolean online) throws OnionCrawlerException {
         try {
             if (online) {
+                logger.info("Setting host-status for "+host+" to online");
                 this.databaseService.getQueryRunner().update("REPLACE INTO onionHosts SET host=?, lastChecked=NOW(), lastOnline=NOW()", host);
             } else {
+                logger.info("Setting host-status for "+host+" to offline");
                 this.databaseService.getQueryRunner().update("REPLACE INTO onionHosts SET host=?, lastChecked=NOW()", host);
             }
         }catch(Exception ex) {

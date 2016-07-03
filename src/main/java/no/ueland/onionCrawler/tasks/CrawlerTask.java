@@ -84,6 +84,7 @@ public class CrawlerTask implements Task {
 
             //Is URL allowed by robots.txt?
             if(!robotsTxtService.canCrawl(todo.getURL())) {
+                logger.info(todo.getURL()+" blocked by robots.txt, skipping");
                 return;
             }
 
