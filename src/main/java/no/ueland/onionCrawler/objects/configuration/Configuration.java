@@ -23,7 +23,11 @@ public class Configuration {
     }
 
     public String[] getStrings(ConfigurationKey key) {
-        return getString(key).split(",");
+        String s = getString(key);
+        if(s == null) {
+            s = "";
+        }
+        return s.split(",");
     }
 
     public Object getObject(ConfigurationKey key) {

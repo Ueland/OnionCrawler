@@ -63,7 +63,7 @@ public class OnionCrawler {
         //Everything up
         List<String> serverIPs = OnionCrawlerServerUtil.getServerIP();
         if (serverIPs.size() == 1) {
-            System.out.println("OnionCrawler " + versionService.getVersion() + " started, point your browser to <server IP>:8080/admin.");
+            System.out.println("OnionCrawler " + versionService.getVersion() + " started, point your browser to "+serverIPs.get(0)+":8080/admin.");
         } else {
             System.out.println("OnionCrawler " + versionService.getVersion() + " started, point your browser to one of the following addresses:");
             for (String IP : serverIPs) {
@@ -118,7 +118,7 @@ public class OnionCrawler {
         try {
             httpServer = new Server(8080);
 
-            String webDir = getClass().getClassLoader().getResource("webapp").toExternalForm();
+            String webDir = getClass().getClassLoader().getResource("src/main/webapp").toExternalForm();
             logger.debug("creating webapp @ " + webDir);
 
             WebAppContext context = new WebAppContext();
@@ -184,11 +184,13 @@ public class OnionCrawler {
     }
 
     private void stopTaskScheduler() {
-        for(Task t : tasks) {
-            try {
-                t.shutdown();
-            } catch (OnionCrawlerException e) {
-                logger.error("Could not stop task "+t.getTaskName()+", reason: "+e.getMessage(), e);
+        if(tasks != null) {
+            for (Task t : tasks) {
+                try {
+                    t.shutdown();
+                } catch (OnionCrawlerException e) {
+                    logger.error("Could not stop task " + t.getTaskName() + ", reason: " + e.getMessage(), e);
+                }
             }
         }
     }
@@ -199,6 +201,7 @@ public class OnionCrawler {
             searchService = injector.getInstance(SearchService.class);
             versionService = injector.getInstance(VersionService.class);
             configurationService = injector.getInstance(ConfigurationService.class);
+            httpFetcherService = injector.getInstance(HTTPFetcherService.class);
         } catch (Exception ex) {
             logger.error("Could not start core system: " + ex.getMessage(), ex);
             System.exit(1);

@@ -49,6 +49,11 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
         }
     }
 
+    @Override
+    public void haveTorConnectivity() throws OnionCrawlerException {
+        throw new OnionCrawlerException("Not implemented yet");
+    }
+
     private HttpURLConnection getHttpURLConnection(URL URL, String method) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setRequestMethod(method);

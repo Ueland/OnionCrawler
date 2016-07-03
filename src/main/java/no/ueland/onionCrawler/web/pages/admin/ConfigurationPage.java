@@ -63,6 +63,9 @@ public class ConfigurationPage extends Page {
         for(ConfigurationKey ck : ConfigurationKey.values()) {
             String out = c.getString(ck);
             if(ck == ConfigurationKey.SocksProxies) {
+                if(out == null) {
+                    out = "";
+                }
                 out = out.replace(",", "\n");
             }
             m.put(ck.name(), out);
