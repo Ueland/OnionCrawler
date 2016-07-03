@@ -26,8 +26,7 @@ public class AutoPopulatetoCrawlTask implements Task {
     private Logger logger = Logger.getLogger(getClass());
     private Timer timer;
     private String[] startURLs = {
-            "https://www.reddit.com/r/onions/search?q=url%3A.onion&sort=new&restrict_sr=on",
-            "https://www.reddit.com/r/onions/search?q=url%3A.onion&sort=top&restrict_sr=on",
+            "https://www.reddit.com/r/onions/top/?sort=top&t=month",
     };
 
     @Override
