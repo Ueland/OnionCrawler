@@ -63,6 +63,16 @@ public class CrawlerTask implements Task {
     }
 
     private void doCrawl() throws OnionCrawlerException {
+
+        //Can we work yet?
+        try {
+            this.httpFetcherService.haveTorConnectivity();
+        }catch(OnionCrawlerException ox) {
+            //We are not ready yet
+            logger.info("Tor-connectivity not ready, awaiting crawling");
+            return;
+        }
+
         //Find URL to crawl
         ToCrawl todo = crawlService.get();
         if(todo == null) {
