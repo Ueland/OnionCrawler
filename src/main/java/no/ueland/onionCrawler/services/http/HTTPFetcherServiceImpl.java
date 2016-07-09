@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -23,9 +24,13 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
 
     @Inject
     private ConfigurationService configurationService;
+    private long lastConnectivityCheck = 0;
+    private boolean lastConnectivityResult = false;
 
     @Override
     public HTTPFetchResult fetch(URL URL, HTTPMethod method) throws OnionCrawlerException {
+
+        setRandomTorProxy();
         try {
             StringBuilder content = new StringBuilder();
             HttpURLConnection connection = getHttpURLConnection(URL, method.name());
@@ -46,12 +51,53 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
             return result;
         }catch(Exception ex) {
             throw new OnionCrawlerException(ex);
+        }finally {
+            unsetTorProxy();
         }
+    }
+
+    private void unsetTorProxy() {
+        System.clearProperty("socksProxyHost");
+        System.clearProperty("socksProxyPort");
+    }
+
+    private void setRandomTorProxy() {
+        String[] servers = this.configurationService.get().getStrings(ConfigurationKey.SocksProxies);
+        if(servers.length == 0) {
+            return;
+        }
+        if(servers.length == 1) {
+            setTorProxy(servers[0]);
+            return;
+        }
+        setTorProxy(servers[(int) (Math.random()*servers.length)]);
+    }
+
+    private void setTorProxy(String server) {
+        String[] bits = server.split(":");
+        System.setProperty("socksProxyHost", bits[0]);
+        System.setProperty("socksProxyPort", bits[1]);
     }
 
     @Override
     public void haveTorConnectivity() throws OnionCrawlerException {
-        throw new OnionCrawlerException("Not implemented yet");
+        if(System.currentTimeMillis() - lastConnectivityCheck < 60000) {
+            if(!lastConnectivityResult) {
+                throw new OnionCrawlerException("No Tor connectivity detected, will retry within 1 minute");
+            } else {
+                return;
+            }
+        }
+        try {
+            HTTPFetchResult res = this.fetch(new URL("https://check.torproject.org/api/ip"), HTTPMethod.HEAD);
+            lastConnectivityCheck = System.currentTimeMillis();
+            lastConnectivityResult = res.getResult().contains("true");
+            if(!lastConnectivityResult) {
+                throw new OnionCrawlerException("No Tor connectivity detected, have you setup a Tor Socks server?");
+            }
+        } catch (Exception e) {
+            throw new OnionCrawlerException("No Tor connectivity detected: "+e.getMessage());
+        }
     }
 
     private HttpURLConnection getHttpURLConnection(URL URL, String method) throws IOException {
