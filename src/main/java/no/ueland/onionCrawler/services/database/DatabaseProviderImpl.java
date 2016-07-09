@@ -2,7 +2,7 @@ package no.ueland.onionCrawler.services.database;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.jolbox.bonecp.BoneCPDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
 import no.ueland.onionCrawler.objects.configuration.Configuration;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
@@ -11,8 +11,6 @@ import no.ueland.onionCrawler.services.guice.DatabaseProvider;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Created by TorHenning on 19.08.2015.
@@ -21,14 +19,7 @@ import java.sql.SQLException;
 @Singleton
 public class DatabaseProviderImpl implements DatabaseProvider {
 
-    private static BoneCPDataSource datasource = new BoneCPDataSource() {
-        @Override
-        public Connection getConnection() throws SQLException {
-            Connection con = super.getConnection();
-            con.setAutoCommit(getDefaultAutoCommit());
-            return con;
-        }
-    };
+    private static HikariDataSource datasource = new HikariDataSource();
     private final ConfigurationService configurationService;
     Logger logger = Logger.getLogger(DatabaseProviderImpl.class);
     boolean hasCreatedConnection = false;
@@ -39,7 +30,7 @@ public class DatabaseProviderImpl implements DatabaseProvider {
     }
 
     private void setupConnection() {
-        datasource.setDriverClass("com.mysql.jdbc.Driver");
+        datasource.setDriverClassName("com.mysql.jdbc.Driver");
         Configuration config = configurationService.get();
         try {
             String hostname = config.getString(ConfigurationKey.DatabaseHostname);
@@ -53,14 +44,10 @@ public class DatabaseProviderImpl implements DatabaseProvider {
                 //ignored
             }
             datasource.setJdbcUrl("jdbc:mysql://" + hostname + ":" + port + "/" + database + "?rewriteBatchedStatements=true&autoReconnectForPools=true&autoReconnect=true&useEncoding=true&useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");
-            datasource.setLazyInit(true);
-            datasource.setUser(username);
+            datasource.setUsername(username);
             datasource.setPassword(password);
-            datasource.setPartitionCount(2);
-            datasource.setMaxConnectionsPerPartition(100);
-            datasource.setAcquireIncrement(2);
-            datasource.setConnectionTestStatement("/* SQL-TEST */ SELECT 1");
-            datasource.setDefaultAutoCommit(true);
+            datasource.setConnectionTestQuery("/* SQL-TEST */ SELECT 1");
+            datasource.setAutoCommit(true);
             hasCreatedConnection = true;
         } catch (Exception nx) {
             logger.error("Error setting up database connection, please make sure that all database settings are defined in your configuration, #: " + nx.getMessage(), nx);
