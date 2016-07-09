@@ -47,14 +47,7 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
             return result;
         }catch(Exception ex) {
             throw new OnionCrawlerException(ex);
-        }finally {
-            unsetTorProxy();
         }
-    }
-
-    private void unsetTorProxy() {
-        System.clearProperty("socksProxyHost");
-        System.clearProperty("socksProxyPort");
     }
 
     @Override
