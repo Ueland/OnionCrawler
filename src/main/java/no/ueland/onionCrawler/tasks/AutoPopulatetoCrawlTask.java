@@ -17,7 +17,7 @@ import java.util.TimerTask;
  *
  * Created by TorHenning on 03.07.2016.
  */
-public class AutoPopulatetoCrawlTask implements Task {
+public class AutoPopulateToCrawlTask implements Task {
 
     @Inject
     CrawlService crawlService;
