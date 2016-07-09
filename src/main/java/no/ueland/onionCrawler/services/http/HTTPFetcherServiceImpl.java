@@ -12,9 +12,7 @@ import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 /**
  * Created by TorHenning on 25.08.2015.
@@ -29,8 +27,6 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
 
     @Override
     public HTTPFetchResult fetch(URL URL, HTTPMethod method) throws OnionCrawlerException {
-
-        setRandomTorProxy();
         try {
             StringBuilder content = new StringBuilder();
             HttpURLConnection connection = getHttpURLConnection(URL, method.name());
@@ -61,27 +57,9 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
         System.clearProperty("socksProxyPort");
     }
 
-    private void setRandomTorProxy() {
-        String[] servers = this.configurationService.get().getStrings(ConfigurationKey.SocksProxies);
-        if(servers.length == 0) {
-            return;
-        }
-        if(servers.length == 1) {
-            setTorProxy(servers[0]);
-            return;
-        }
-        setTorProxy(servers[(int) (Math.random()*servers.length)]);
-    }
-
-    private void setTorProxy(String server) {
-        String[] bits = server.split(":");
-        System.setProperty("socksProxyHost", bits[0]);
-        System.setProperty("socksProxyPort", bits[1]);
-    }
-
     @Override
     public void haveTorConnectivity() throws OnionCrawlerException {
-        if(System.currentTimeMillis() - lastConnectivityCheck < 60000) {
+        if(lastConnectivityCheck != 0 && System.currentTimeMillis() - lastConnectivityCheck < 60000) {
             if(!lastConnectivityResult) {
                 throw new OnionCrawlerException("No Tor connectivity detected, will retry within 1 minute");
             } else {
@@ -89,22 +67,40 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
             }
         }
         try {
-            HTTPFetchResult res = this.fetch(new URL("https://check.torproject.org/api/ip"), HTTPMethod.HEAD);
-            lastConnectivityCheck = System.currentTimeMillis();
+            HTTPFetchResult res = this.fetch(new URL("https://check.torproject.org/api/ip"), HTTPMethod.GET);
             lastConnectivityResult = res.getResult().contains("true");
             if(!lastConnectivityResult) {
                 throw new OnionCrawlerException("No Tor connectivity detected, have you setup a Tor Socks server?");
             }
         } catch (Exception e) {
             throw new OnionCrawlerException("No Tor connectivity detected: "+e.getMessage());
+        } finally {
+            lastConnectivityCheck = System.currentTimeMillis();
         }
     }
 
     private HttpURLConnection getHttpURLConnection(URL URL, String method) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) URL.openConnection(getProxy());
         connection.setRequestMethod(method);
         connection.setRequestProperty("User-Agent", configurationService.get().getString(ConfigurationKey.CrawlerUserAgent));
         connection.connect();
         return connection;
+    }
+
+    private Proxy getProxy() throws UnknownHostException {
+        String[] servers = this.configurationService.get().getStrings(ConfigurationKey.SocksProxies);
+        if(servers.length == 0) {
+            return null;
+        }
+        if(servers.length == 1) {
+            return getProxyFromServer(servers[0]);
+        }
+        return getProxyFromServer(servers[(int) (Math.random()*servers.length)]);
+    }
+
+    private Proxy getProxyFromServer(String server) throws UnknownHostException {
+        String[] bits = server.split(":");
+        int port = Integer.parseInt(bits[1]);
+        return new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(InetAddress.getByName(bits[0]), port));
     }
 }
