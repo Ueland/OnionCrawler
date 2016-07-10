@@ -1,13 +1,11 @@
 package no.ueland.onionCrawler.tasks;
 
 import com.google.inject.Inject;
-import no.ueland.onionCrawler.objects.crawl.ToCrawl;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import no.ueland.onionCrawler.services.crawl.CrawlService;
 import org.apache.log4j.Logger;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 

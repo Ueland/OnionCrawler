@@ -51,10 +51,9 @@ CREATE TABLE IF NOT EXISTS `robotsTxt` (
 --
 
 CREATE TABLE IF NOT EXISTS `toCrawl` (
-  `URL` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL,
-  `added` datetime NOT NULL,
+  `URL` varchar(255) COLLATE utf8_bin NOT NULL,
   `lastAction` datetime DEFAULT NULL,
   `attempts` int(3) unsigned NOT NULL,
   UNIQUE KEY `URL` (`URL`),
-  KEY `added` (`added`,`lastAction`)
+  KEY `lastAction` (`lastAction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
