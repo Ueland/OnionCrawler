@@ -10,8 +10,7 @@ import java.util.Date;
 public class ToCrawl {
     private URL urlInstance;
     private String URL;
-    private Date added;
-    private Date lastAttempt;
+    private Date lastAction;
     private int attempts;
 
     public int getAttempts() {
@@ -20,22 +19,6 @@ public class ToCrawl {
 
     public void setAttempts(int attempts) {
         this.attempts = attempts;
-    }
-
-    public Date getLastAttempt() {
-        return lastAttempt;
-    }
-
-    public void setLastAttempt(Date lastAttempt) {
-        this.lastAttempt = lastAttempt;
-    }
-
-    public Date getAdded() {
-        return added;
-    }
-
-    public void setAdded(Date added) {
-        this.added = added;
     }
 
     public String getURL() {
@@ -55,5 +38,13 @@ public class ToCrawl {
             }
         }
         return urlInstance;
+    }
+
+    public Date getLastAction() {
+        return lastAction;
+    }
+
+    public void setLastAction(Date lastAction) {
+        this.lastAction = lastAction;
     }
 }

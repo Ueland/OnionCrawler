@@ -46,8 +46,12 @@ public class DatabaseProviderImpl implements DatabaseProvider {
             datasource.setJdbcUrl("jdbc:mysql://" + hostname + ":" + port + "/" + database + "?rewriteBatchedStatements=true&autoReconnectForPools=true&autoReconnect=true&useEncoding=true&useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");
             datasource.setUsername(username);
             datasource.setPassword(password);
-            datasource.setConnectionTestQuery("/* SQL-TEST */ SELECT 1");
+            datasource.setConnectionTestQuery("/* OnionCrawler */ SELECT 1");
             datasource.setAutoCommit(true);
+            datasource.setIdleTimeout(5000);
+            datasource.setMaxLifetime(60000);
+            datasource.setMinimumIdle(1);
+            datasource.setMaximumPoolSize(20);
             hasCreatedConnection = true;
         } catch (Exception nx) {
             logger.error("Error setting up database connection, please make sure that all database settings are defined in your configuration, #: " + nx.getMessage(), nx);

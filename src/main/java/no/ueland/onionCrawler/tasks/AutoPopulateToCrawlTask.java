@@ -51,10 +51,7 @@ public class AutoPopulateToCrawlTask implements Task {
         if(crawlService.get() == null) {
             for(String URL : startURLs) {
                 logger.info("No URLs available for crawling, adding default start URL: "+URL);
-                ToCrawl tc = new ToCrawl();
-                tc.setAdded(new Date());
-                tc.setURL(URL);
-                crawlService.add(tc);
+                crawlService.add(URL);
             }
         }
     }

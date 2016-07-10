@@ -53,15 +53,8 @@ CREATE TABLE IF NOT EXISTS `robotsTxt` (
 CREATE TABLE IF NOT EXISTS `toCrawl` (
   `URL` varchar(255) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL,
   `added` datetime NOT NULL,
-  `lastAttempt` datetime DEFAULT NULL,
+  `lastAction` datetime DEFAULT NULL,
   `attempts` int(3) unsigned NOT NULL,
   UNIQUE KEY `URL` (`URL`),
-  KEY `lastAttempt` (`lastAttempt`)
+  KEY `added` (`added`,`lastAction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `toCrawl`
---
-
-INSERT INTO `toCrawl` (`URL`, `added`, `lastAttempt`, `attempts`) VALUES
-  ('https://www.reddit.com/r/onions', '2015-08-19 22:12:40', NULL, 0);
