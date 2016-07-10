@@ -45,7 +45,7 @@ public class CrawlServiceImpl implements CrawlService {
     @Override
     public ToCrawl get() throws OnionCrawlerException {
         try {
-            return (ToCrawl) this.db.getQueryRunner().query("SELECT * FROM toCrawl ORDER BY lasAction ASC LIMIT 1", new BeanHandler(ToCrawl.class));
+            return (ToCrawl) this.db.getQueryRunner().query("SELECT * FROM toCrawl ORDER BY lastAction ASC LIMIT 1", new BeanHandler(ToCrawl.class));
         } catch (SQLException e) {
             throw new OnionCrawlerException(e);
         }
