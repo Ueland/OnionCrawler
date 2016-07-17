@@ -1,13 +1,11 @@
 package no.ueland.onionCrawler.tasks;
 
 import com.google.inject.Inject;
-import no.ueland.onionCrawler.objects.crawl.ToCrawl;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import no.ueland.onionCrawler.services.crawl.CrawlService;
 import org.apache.log4j.Logger;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,10 +49,7 @@ public class AutoPopulateToCrawlTask implements Task {
         if(crawlService.get() == null) {
             for(String URL : startURLs) {
                 logger.info("No URLs available for crawling, adding default start URL: "+URL);
-                ToCrawl tc = new ToCrawl();
-                tc.setAdded(new Date());
-                tc.setURL(URL);
-                crawlService.add(tc);
+                crawlService.add(URL);
             }
         }
     }

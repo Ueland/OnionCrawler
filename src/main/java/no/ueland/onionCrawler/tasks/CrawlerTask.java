@@ -134,7 +134,7 @@ public class CrawlerTask implements Task {
             Throwable cause = ExceptionUtil.getNonOnionCause(oe);
             if(cause instanceof ConnectException || cause instanceof UnknownHostException) {
                 //Could not connect... Save and try again later
-                todo.setLastAttempt(new Date());
+                todo.setLastAction(new Date());
                 todo.setAttempts(todo.getAttempts() + 1);
                 crawlService.add(todo);
                 onionHostService.setStatus(todo.asURL().getHost(), false);

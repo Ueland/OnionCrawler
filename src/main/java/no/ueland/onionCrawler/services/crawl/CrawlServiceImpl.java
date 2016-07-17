@@ -26,7 +26,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
         ToCrawl obj = new ToCrawl();
         obj.setURL(URL);
-        obj.setAdded(new Date());
+        obj.setLastAction(new Date());
         add(obj);
     }
 
@@ -36,7 +36,7 @@ public class CrawlServiceImpl implements CrawlService {
             if(DBUtil.getIntValue(this.db.getQueryRunner(), "SELECT COUNT(URL) FROM toCrawl WHERE URL='"+todo.getURL()+"'") > 0) {
                 return;
             }
-            this.db.getQueryRunner().update("INSERT INTO toCrawl SET URL=?, added=?, lastAttempt=?, attempts=?", todo.getURL(), todo.getAdded(), todo.getLastAttempt(), todo.getAttempts());
+            this.db.getQueryRunner().update("INSERT INTO toCrawl SET URL=?, lastAction=?, attempts=?", todo.getURL(), todo.getLastAction(), todo.getAttempts());
         } catch (SQLException e) {
             throw new OnionCrawlerException(e);
         }
@@ -45,7 +45,7 @@ public class CrawlServiceImpl implements CrawlService {
     @Override
     public ToCrawl get() throws OnionCrawlerException {
         try {
-            return (ToCrawl) this.db.getQueryRunner().query("SELECT * FROM toCrawl ORDER BY lastAttempt ASC LIMIT 1", new BeanHandler(ToCrawl.class));
+            return (ToCrawl) this.db.getQueryRunner().query("SELECT * FROM toCrawl ORDER BY lastAction ASC LIMIT 1", new BeanHandler(ToCrawl.class));
         } catch (SQLException e) {
             throw new OnionCrawlerException(e);
         }
