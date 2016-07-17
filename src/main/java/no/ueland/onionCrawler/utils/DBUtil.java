@@ -4,6 +4,7 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -15,13 +16,17 @@ public class DBUtil {
 
     public static int getIntValue(QueryRunner qr, String SQL) throws OnionCrawlerException {
         try {
-            Statement st = qr.getDataSource().getConnection().createStatement();
+            Connection con = qr.getDataSource().getConnection();
+            Statement st = con.createStatement();
             ResultSet data = st.executeQuery(SQL);
             try {
                 data.next();
                 return data.getInt(1);
             } catch (Exception _ex) {
                 return 0;
+            } finally {
+                st.close();
+                con.close();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -32,13 +37,17 @@ public class DBUtil {
 
     public static String getStringValue(QueryRunner qr, String SQL) throws OnionCrawlerException {
         try {
-            Statement st = qr.getDataSource().getConnection().createStatement();
+            Connection con = qr.getDataSource().getConnection();
+            Statement st = con.createStatement();
             ResultSet data = st.executeQuery(SQL);
             try {
                 data.next();
                 return data.getString(1);
             } catch (Exception _ex) {
                 return null;
+            } finally {
+                st.close();
+                con.close();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
