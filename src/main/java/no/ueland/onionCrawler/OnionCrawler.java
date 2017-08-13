@@ -97,14 +97,14 @@ public class OnionCrawler {
         tasks.add(new CrawlerTask());
         tasks.add(new AutoPopulateToCrawlTask());
 
-        for(Task t : tasks) {
-            try {
-                injector.injectMembers(t);
-                t.init();
-            } catch (OnionCrawlerException e) {
-                logger.error("Could not start task "+t.getTaskName()+", reason: "+e.getMessage(), e);
-            }
-        }
+        tasks.forEach(t -> {
+	        try {
+		        injector.injectMembers(t);
+		        t.init();
+	        } catch (OnionCrawlerException e) {
+		        logger.error("Could not start task "+t.getTaskName()+", reason: "+e.getMessage(), e);
+	        }
+        });
     }
 
     public static void main(String[] args) {

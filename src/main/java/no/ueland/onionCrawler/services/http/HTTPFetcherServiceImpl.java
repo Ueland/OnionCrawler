@@ -75,7 +75,11 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
     }
 
     private HttpURLConnection getHttpURLConnection(URL URL, String method) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) URL.openConnection(getProxy());
+    	  Proxy proxy = getProxy();
+    	  if(proxy == null) {
+    	  	throw new IOException("No Tor-node set, please check the \"Tor configuration\" part of the configuration");
+	      }
+        HttpURLConnection connection = (HttpURLConnection) URL.openConnection(proxy);
         connection.setRequestMethod(method);
         connection.setRequestProperty("User-Agent", configurationService.get().getString(ConfigurationKey.CrawlerUserAgent));
         connection.connect();
@@ -84,7 +88,7 @@ public class HTTPFetcherServiceImpl implements HTTPFetcherService {
 
     private Proxy getProxy() throws UnknownHostException {
         String[] servers = this.configurationService.get().getStrings(ConfigurationKey.SocksProxies);
-        if(servers.length == 0) {
+        if(servers.length == 0 || servers[0].length() == 0) {
             return null;
         }
         if(servers.length == 1) {

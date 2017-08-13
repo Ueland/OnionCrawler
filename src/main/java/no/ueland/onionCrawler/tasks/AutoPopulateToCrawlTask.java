@@ -20,6 +20,7 @@ public class AutoPopulateToCrawlTask implements Task {
     CrawlService crawlService;
     @Inject
     ConfigurationService configurationService;
+
     private Logger logger = Logger.getLogger(getClass());
     private Timer timer;
     private String[] startURLs = {
