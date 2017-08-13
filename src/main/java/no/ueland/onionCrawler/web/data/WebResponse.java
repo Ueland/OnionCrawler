@@ -2,9 +2,6 @@ package no.ueland.onionCrawler.web.data;
 
 import com.google.common.base.Strings;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
 public class WebResponse {
     private Boolean success;
     private Object result;

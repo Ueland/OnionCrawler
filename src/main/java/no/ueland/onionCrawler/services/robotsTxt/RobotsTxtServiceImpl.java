@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler.services.robotsTxt;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import crawlercommons.robots.BaseRobotRules;
@@ -17,12 +20,6 @@ import no.ueland.onionCrawler.utils.OnionHostUtil;
 import no.ueland.onionCrawler.utils.URLUtil;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-/**
- * Created by TorHenning on 20.08.2015.
- */
 @Singleton
 public class RobotsTxtServiceImpl implements RobotsTxtService {
 

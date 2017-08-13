@@ -2,9 +2,6 @@ package no.ueland.onionCrawler.enums.http;
 
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 
-/**
- * Created by TorHenning on 25.08.2015.
- */
 public enum HTTPContentType {
     PLAIN_TEXT,
     HTML,

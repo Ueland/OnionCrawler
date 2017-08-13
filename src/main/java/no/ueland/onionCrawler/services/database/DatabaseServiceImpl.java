@@ -1,5 +1,11 @@
 package no.ueland.onionCrawler.services.database;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
@@ -8,16 +14,6 @@ import no.ueland.onionCrawler.services.guice.DatabaseProvider;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 
 @Singleton
 public class DatabaseServiceImpl implements DatabaseService {

@@ -2,9 +2,6 @@ package no.ueland.onionCrawler.objects.http;
 
 import no.ueland.onionCrawler.enums.http.HTTPContentType;
 
-/**
- * Created by TorHenning on 25.08.2015.
- */
 public class HTTPFetchResult {
     private int responseCode;
     private String result;

@@ -6,9 +6,6 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.database.DatabaseService;
 import org.apache.log4j.Logger;
 
-/**
- * Created by TorHenning on 20.08.2015.
- */
 @Singleton
 public class OnionHostServiceImpl implements OnionHostService {
 

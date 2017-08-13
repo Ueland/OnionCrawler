@@ -1,12 +1,9 @@
 package no.ueland.onionCrawler.objects.configuration;
 
-import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
-
 import java.util.HashMap;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
+import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
+
 public class Configuration {
     private HashMap<String, Object> values;
 

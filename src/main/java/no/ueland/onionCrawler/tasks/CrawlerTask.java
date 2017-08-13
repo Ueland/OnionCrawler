@@ -27,8 +27,6 @@ import java.util.*;
 
 /**
  *  Core task that performs the actual crawling for a URL
- *
- * Created by TorHenning on 19.08.2015.
  */
 public class CrawlerTask implements Task {
 

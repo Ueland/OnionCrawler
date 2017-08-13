@@ -1,5 +1,7 @@
 package no.ueland.onionCrawler.services.database;
 
+import javax.sql.DataSource;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
@@ -10,12 +12,6 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import no.ueland.onionCrawler.services.guice.DatabaseProvider;
 import org.apache.log4j.Logger;
-
-import javax.sql.DataSource;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 
 @Singleton
 public class DatabaseProviderImpl implements DatabaseProvider {

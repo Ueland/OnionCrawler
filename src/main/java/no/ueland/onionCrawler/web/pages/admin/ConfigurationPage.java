@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler.web.pages.admin;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
 import com.britesnow.snow.web.handler.annotation.WebModelHandler;
 import com.britesnow.snow.web.param.annotation.WebModel;
 import com.britesnow.snow.web.param.annotation.WebParam;
@@ -11,12 +14,6 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.web.data.WebResponse;
 import no.ueland.onionCrawler.web.pages.Page;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 @Singleton
 public class ConfigurationPage extends Page {
 

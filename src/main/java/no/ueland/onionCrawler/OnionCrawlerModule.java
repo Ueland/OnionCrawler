@@ -22,9 +22,6 @@ import no.ueland.onionCrawler.services.search.SearchServiceImpl;
 import no.ueland.onionCrawler.services.version.VersionService;
 import no.ueland.onionCrawler.services.version.VersionServiceImpl;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
 public class OnionCrawlerModule extends AbstractModule {
     @Override
     protected void configure() {

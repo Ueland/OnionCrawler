@@ -1,19 +1,18 @@
 package no.ueland.onionCrawler.tasks;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.google.inject.Inject;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import no.ueland.onionCrawler.services.crawl.CrawlService;
 import org.apache.log4j.Logger;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  *  Auto populates the database table containing websites to visit if the
  *  table is empty or not yet populated.
  *
- * Created by TorHenning on 03.07.2016.
  */
 public class AutoPopulateToCrawlTask implements Task {
 

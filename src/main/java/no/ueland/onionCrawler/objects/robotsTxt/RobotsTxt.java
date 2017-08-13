@@ -2,9 +2,6 @@ package no.ueland.onionCrawler.objects.robotsTxt;
 
 import java.util.Date;
 
-/**
- * Created by TorHenning on 20.08.2015.
- */
 public class RobotsTxt {
     private String host;
     private int port;

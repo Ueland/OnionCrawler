@@ -13,9 +13,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
 @Singleton
 public class ConfigurationServiceImpl implements ConfigurationService {
 

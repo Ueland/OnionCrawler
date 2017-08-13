@@ -1,18 +1,15 @@
 package no.ueland.onionCrawler.web.pages;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
 import com.britesnow.snow.web.handler.annotation.WebModelHandler;
 import com.britesnow.snow.web.param.annotation.WebModel;
 import com.britesnow.snow.web.renderer.freemarker.FreemarkerUtil;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.utils.ServletUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 @Singleton
 public class AllPages extends Page {
 

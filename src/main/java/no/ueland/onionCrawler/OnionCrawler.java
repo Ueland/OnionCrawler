@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
@@ -17,14 +20,14 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.*;
+import org.eclipse.jetty.webapp.Configuration;
+import org.eclipse.jetty.webapp.FragmentConfiguration;
+import org.eclipse.jetty.webapp.MetaInfConfiguration;
+import org.eclipse.jetty.webapp.TagLibConfiguration;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eclipse.jetty.webapp.WebXmlConfiguration;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 public class OnionCrawler {
 
     private Logger logger = Logger.getLogger(OnionCrawler.class);

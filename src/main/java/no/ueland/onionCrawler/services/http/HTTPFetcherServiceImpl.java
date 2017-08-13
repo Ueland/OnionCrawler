@@ -1,5 +1,15 @@
 package no.ueland.onionCrawler.services.http;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.UnknownHostException;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
@@ -9,14 +19,6 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.objects.http.HTTPFetchResult;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.*;
-
-/**
- * Created by TorHenning on 25.08.2015.
- */
 @Singleton
 public class HTTPFetcherServiceImpl implements HTTPFetcherService {
 

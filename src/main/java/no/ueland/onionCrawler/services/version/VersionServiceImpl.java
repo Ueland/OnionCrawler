@@ -1,19 +1,15 @@
 package no.ueland.onionCrawler.services.version;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.database.DatabaseService;
 import no.ueland.onionCrawler.utils.DBUtil;
 import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 
 @Singleton
 public class VersionServiceImpl implements VersionService {

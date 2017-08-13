@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler.services.crawl;
 
+import java.sql.SQLException;
+import java.util.Date;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.objects.crawl.ToCrawl;
@@ -8,12 +11,6 @@ import no.ueland.onionCrawler.services.database.DatabaseService;
 import no.ueland.onionCrawler.utils.DBUtil;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
-import java.sql.SQLException;
-import java.util.Date;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 @Singleton
 public class CrawlServiceImpl implements CrawlService {
     @Inject

@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler.enums.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntField;
@@ -7,12 +10,6 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexableField;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 public enum SearchField {
     URL(Field.Store.YES, SearchFieldType.String),
     Hostname(Field.Store.YES, SearchFieldType.String),

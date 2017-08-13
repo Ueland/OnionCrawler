@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler.services.search;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.enums.search.SearchField;
@@ -19,13 +22,6 @@ import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.NativeFSLockFactory;
 import org.apache.lucene.util.Version;
-
-import java.io.File;
-import java.io.IOException;
-
-/**
- * Created by TorHenning on 19.08.2015.
- */
 
 @Singleton
 public class SearchServiceImpl implements SearchService {

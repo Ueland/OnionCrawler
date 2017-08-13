@@ -1,16 +1,13 @@
 package no.ueland.onionCrawler.utils;
 
-import org.apache.log4j.Logger;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
+import org.apache.log4j.Logger;
+
 public class OnionCrawlerServerUtil {
     static Logger logger = Logger.getLogger(OnionCrawlerServerUtil.class);
 

@@ -4,9 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
 public class ToCrawl {
     private URL urlInstance;
     private String URL;

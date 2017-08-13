@@ -1,16 +1,13 @@
 package no.ueland.onionCrawler.utils;
 
-import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-/**
- * Created by TorHenning on 19.08.2015.
- */
+import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.log4j.Logger;
+
 public class DBUtil {
     static Logger logger = Logger.getLogger(DBUtil.class);
 
