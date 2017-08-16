@@ -16,6 +16,11 @@ import no.ueland.onionCrawler.services.http.HTTPFetcherService;
 import no.ueland.onionCrawler.services.robotsTxt.RobotsTxtService;
 import org.apache.log4j.Logger;
 
+/**
+ * Task that around once per day will download the onion blacklist from
+ * ahmia.fi. Does currently not remove old blacklisted sites, will add
+ * that feature if requested at a later stage
+ */
 public class ImportAhmiaFiBlackListTask implements Task {
 
 	private Logger logger = Logger.getLogger(CrawlerTask.class);
@@ -51,19 +56,19 @@ public class ImportAhmiaFiBlackListTask implements Task {
 			logger.info("Not connected to the Tor-network, awaits updating of blacklist from Ahmia.fi.");
 			return;
 		}
-		if(canRun) {
+		if (canRun) {
 			// Ok as of robots.txt?
 			try {
-				if(robotsTxtService.canCrawl(blackListURL)) {
+				if (robotsTxtService.canCrawl(blackListURL)) {
 					HTTPFetchResult blackListData = httpFetcherService.fetch(new URL(blackListURL), HTTPMethod.GET);
 					String[] bannedDomains = blackListData.getResult().split("\n");
-					for(String s : bannedDomains) {
-						if(s.length() == 32) { // Simple verification of md5 hash
-							banService.addMd5sum(s, "Imported from "+blackListURL);
+					for (String s : bannedDomains) {
+						if (s.length() == 32) { // Simple verification of md5 hash
+							banService.addMd5sum(s, "Imported from " + blackListURL);
 						}
 					}
 				}
-			} catch (OnionCrawlerException|MalformedURLException e) {
+			} catch (OnionCrawlerException | MalformedURLException e) {
 				logger.error(e.getMessage(), e);
 			}
 		}

@@ -2,20 +2,20 @@ package no.ueland.onionCrawler.enums.configuration;
 
 public enum ConfigurationKey {
 
-    // Database connection
-    DatabaseUsername,
-    DatabaseHostname,
-    DatabaseName,
-    DatabasePort,
-    DatabasePassword,
+	// Database connection
+	DatabaseUsername,
+	DatabaseHostname,
+	DatabaseName,
+	DatabasePort,
+	DatabasePassword,
 
-    // Crawler config
-    CrawlerUserAgent,
+	// Crawler config
+	CrawlerUserAgent,
 
-		// Tor settings
-    SocksProxies,
+	// Tor settings
+	SocksProxies,
 
-		// Blacklist config
-		importBlacklistFromAhmiaFi,
+	// Blacklist config
+	importBlacklistFromAhmiaFi,
 
 }

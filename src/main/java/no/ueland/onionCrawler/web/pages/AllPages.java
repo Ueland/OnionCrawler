@@ -13,23 +13,23 @@ import no.ueland.onionCrawler.utils.ServletUtil;
 @Singleton
 public class AllPages extends Page {
 
-    private final FreemarkerUtil freemarkerUtil;
+	private final FreemarkerUtil freemarkerUtil;
 
-    public AllPages() {
-        this.freemarkerUtil = new FreemarkerUtil();
-    }
+	public AllPages() {
+		this.freemarkerUtil = new FreemarkerUtil();
+	}
 
-    @WebModelHandler(startsWith = "/")
-    public void doWebGet(@WebModel Map m, HttpServletRequest req, HttpServletResponse res) throws Exception {
-        boolean isInstalled = configurationService.isInstalled();
-        m.put("isInstalled", isInstalled);
-        if (!isInstalled && !ServletUtil.getRequestedPath(req).equals("/admin/configuration")) {
-            res.sendRedirect("/admin/configuration");
-        }
-        if (isInstalled) {
-            //Load data used on all pages
-            m.put("freemarkerUtil", freemarkerUtil);
-        }
-        m.put("isAdmin", ServletUtil.getRequestedPath(req).startsWith("/admin"));
-    }
+	@WebModelHandler(startsWith = "/")
+	public void doWebGet(@WebModel Map m, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		boolean isInstalled = configurationService.isInstalled();
+		m.put("isInstalled", isInstalled);
+		if (!isInstalled && !ServletUtil.getRequestedPath(req).equals("/admin/configuration")) {
+			res.sendRedirect("/admin/configuration");
+		}
+		if (isInstalled) {
+			//Load data used on all pages
+			m.put("freemarkerUtil", freemarkerUtil);
+		}
+		m.put("isAdmin", ServletUtil.getRequestedPath(req).startsWith("/admin"));
+	}
 }

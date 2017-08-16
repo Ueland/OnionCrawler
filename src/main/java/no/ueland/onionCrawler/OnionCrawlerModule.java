@@ -23,17 +23,18 @@ import no.ueland.onionCrawler.services.version.VersionService;
 import no.ueland.onionCrawler.services.version.VersionServiceImpl;
 
 public class OnionCrawlerModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(ConfigurationService.class).to(ConfigurationServiceImpl.class).asEagerSingleton();
-        bind(HTTPFetcherService.class).to(HTTPFetcherServiceImpl.class).asEagerSingleton();
-        bind(RobotsTxtService.class).to(RobotsTxtServiceImpl.class).asEagerSingleton();
-        bind(DatabaseProvider.class).to(DatabaseProviderImpl.class).asEagerSingleton();
-        bind(OnionHostService.class).to(OnionHostServiceImpl.class).asEagerSingleton();
-        bind(DatabaseService.class).to(DatabaseServiceImpl.class).asEagerSingleton();
-        bind(VersionService.class).to(VersionServiceImpl.class).asEagerSingleton();
-        bind(SearchService.class).to(SearchServiceImpl.class).asEagerSingleton();
-        bind(CrawlService.class).to(CrawlServiceImpl.class).asEagerSingleton();
-        bind(BanService.class).to(BanServiceImpl.class).asEagerSingleton();;
-    }
+	@Override
+	protected void configure() {
+		bind(ConfigurationService.class).to(ConfigurationServiceImpl.class).asEagerSingleton();
+		bind(HTTPFetcherService.class).to(HTTPFetcherServiceImpl.class).asEagerSingleton();
+		bind(RobotsTxtService.class).to(RobotsTxtServiceImpl.class).asEagerSingleton();
+		bind(DatabaseProvider.class).to(DatabaseProviderImpl.class).asEagerSingleton();
+		bind(OnionHostService.class).to(OnionHostServiceImpl.class).asEagerSingleton();
+		bind(DatabaseService.class).to(DatabaseServiceImpl.class).asEagerSingleton();
+		bind(VersionService.class).to(VersionServiceImpl.class).asEagerSingleton();
+		bind(SearchService.class).to(SearchServiceImpl.class).asEagerSingleton();
+		bind(CrawlService.class).to(CrawlServiceImpl.class).asEagerSingleton();
+		bind(BanService.class).to(BanServiceImpl.class).asEagerSingleton();
+		;
+	}
 }

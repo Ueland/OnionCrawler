@@ -10,8 +10,8 @@ import no.ueland.onionCrawler.web.pages.Page;
 
 @Singleton
 public class ErrorPage extends Page {
-    @WebModelHandler(matches = "/error")
-    public void doWebGet(@WebModel Map m, HttpServletRequest req) {
-        m.put("errorCode", req.getParameter("code"));
-    }
+	@WebModelHandler(matches = "/error")
+	public void doWebGet(@WebModel Map m, HttpServletRequest req) {
+		m.put("errorCode", req.getParameter("code"));
+	}
 }

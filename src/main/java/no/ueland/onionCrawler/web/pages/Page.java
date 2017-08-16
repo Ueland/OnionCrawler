@@ -7,13 +7,13 @@ import org.apache.log4j.Logger;
 
 public class Page {
 
-    protected Logger logger = Logger.getLogger(Page.class);
+	protected Logger logger = Logger.getLogger(Page.class);
 
-    @Inject
-    protected
-    ConfigurationService configurationService;
+	@Inject
+	protected
+	ConfigurationService configurationService;
 
-    @Inject
-    protected
-    DatabaseService databaseService;
+	@Inject
+	protected
+	DatabaseService databaseService;
 }

@@ -7,6 +7,7 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.objects.http.HTTPFetchResult;
 
 public interface HTTPFetcherService {
-    HTTPFetchResult fetch(URL URL, HTTPMethod method) throws OnionCrawlerException;
-    void haveTorConnectivity() throws OnionCrawlerException;
+	HTTPFetchResult fetch(URL URL, HTTPMethod method) throws OnionCrawlerException;
+
+	void haveTorConnectivity() throws OnionCrawlerException;
 }
