@@ -5,14 +5,19 @@ import java.io.File;
 import no.ueland.onionCrawler.objects.configuration.Configuration;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 
+/**
+ * Service that handles getting/setting configuration
+ * options in the application. Configuration is stored
+ * in [run-dir]/OnionCrawler/settings.ini
+ */
 public interface ConfigurationService {
-	public File getWorkDir();
+	File getWorkDir();
 
-	public Configuration get();
+	Configuration get();
 
-	public boolean isInstalled();
+	boolean isInstalled();
 
-	public void save(Configuration c) throws OnionCrawlerException;
+	void save(Configuration c) throws OnionCrawlerException;
 
-	public boolean canSaveConfiguration();
+	boolean canSaveConfiguration();
 }

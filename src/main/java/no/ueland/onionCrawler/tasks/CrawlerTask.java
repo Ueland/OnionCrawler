@@ -1,5 +1,15 @@
 package no.ueland.onionCrawler.tasks;
 
+import java.net.ConnectException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.google.inject.Inject;
 import no.ueland.onionCrawler.enums.http.HTTPContentType;
 import no.ueland.onionCrawler.enums.http.HTTPMethod;
@@ -18,12 +28,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.net.ConnectException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.*;
 
 /**
  * Core task that performs the actual crawling for a URL
@@ -156,6 +160,7 @@ public class CrawlerTask implements Task {
 		List<String> anchors = new ArrayList<>();
 		Document doc = Jsoup.parse(htmlStr);
 		Elements anchorElements = doc.select("a");
+
 		for (int i = 0; i < anchorElements.size(); i++) {
 			Element a = anchorElements.get(i);
 			String href = a.attr("href");
