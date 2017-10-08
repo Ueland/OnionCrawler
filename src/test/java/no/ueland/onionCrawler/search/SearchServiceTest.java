@@ -1,26 +1,19 @@
 package no.ueland.onionCrawler.search;
 
+import com.google.inject.Inject;
+import eu.fabiostrozzi.guicejunitrunner.GuiceJUnitRunner;
+import no.ueland.onionCrawler.OnionCrawlerModule;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.search.SearchService;
-import no.ueland.onionCrawler.services.search.SearchServiceImpl;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(GuiceJUnitRunner.class)
+@GuiceJUnitRunner.GuiceModules({OnionCrawlerModule.class})
 public class SearchServiceTest {
 
-	private static SearchService searchService;
-
-	@BeforeClass
-	public static void init() throws OnionCrawlerException {
-		searchService = new SearchServiceImpl();
-		searchService.init();
-	}
-
-	@AfterClass
-	public static void after() throws OnionCrawlerException {
-		searchService.stop();
-	}
+	@Inject
+	private SearchService searchService;
 
 	@Test
 	public void test() throws OnionCrawlerException {
