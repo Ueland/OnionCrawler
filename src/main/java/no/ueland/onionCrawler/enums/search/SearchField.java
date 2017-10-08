@@ -13,7 +13,8 @@ public enum SearchField {
 	URL(Field.Store.YES, SearchFieldType.String),
 	Hostname(Field.Store.YES, SearchFieldType.String),
 	PageTitle(Field.Store.YES, SearchFieldType.Text),
-	PageContent(Field.Store.NO, SearchFieldType.Text),;
+	PageContent(Field.Store.NO, SearchFieldType.Text),
+	;
 
 	private final Field.Store storeField;
 	private final SearchFieldType searchFieldType;

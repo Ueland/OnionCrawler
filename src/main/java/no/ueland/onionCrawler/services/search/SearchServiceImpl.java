@@ -7,14 +7,18 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.enums.search.SearchField;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
+import no.ueland.onionCrawler.objects.search.SearchDocument;
+import no.ueland.onionCrawler.objects.search.SearchResult;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -90,6 +94,37 @@ public class SearchServiceImpl implements SearchService {
 			throw new OnionCrawlerException(ex);
 		}
 		hasInitialized = false;
+	}
+
+	@Override
+	public void add(SearchDocument document) throws OnionCrawlerException {
+		lazyInit();
+		Document doc = new Document();
+		doc.add(SearchField.URL.getField(document.getURL()));
+		doc.add(SearchField.Hostname.getField(document.getHostname()));
+		doc.add(SearchField.PageTitle.getField(document.getPageTitle()));
+		doc.add(SearchField.PageContent.getField(document.getPageContent()));
+		try {
+			indexWriter.addDocument(doc);
+		} catch (IOException e) {
+			throw new OnionCrawlerException(e);
+		}
+	}
+
+	@Override
+	public SearchResult search(String query) throws OnionCrawlerException {
+		lazyInit();
+		return null;
+	}
+
+	@Override
+	public void remove(String URL) throws OnionCrawlerException {
+		lazyInit();
+		try {
+			indexWriter.deleteDocuments(new Term(SearchField.URL.name(), URL));
+		} catch (IOException e) {
+			throw new OnionCrawlerException(e);
+		}
 	}
 
 	@Override
