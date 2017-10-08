@@ -1,7 +1,7 @@
 package no.ueland.onionCrawler.services.search;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -20,8 +20,8 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.NativeFSLockFactory;
-import org.apache.lucene.util.Version;
 
 @Singleton
 public class SearchServiceImpl implements SearchService {
@@ -35,8 +35,8 @@ public class SearchServiceImpl implements SearchService {
 	private boolean hasInitialized;
 	private IndexReader indexReader;
 	private Logger logger = Logger.getLogger(SearchServiceImpl.class);
-	private File indexDirectory;
-	private NativeFSLockFactory lockFactory;
+	private DirectoryReader indexDirectory;
+	private Lock indexLock;
 
 	@Override
 	public void init() throws OnionCrawlerException {
@@ -45,19 +45,16 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		try {
-			lockFactory = new NativeFSLockFactory(new File("/tmp"));
-			lockFactory.makeLock("onionCrawler");
-
 			//Index directory
-			indexDirectory = new File(configurationService.getWorkDir().getAbsolutePath() + "/lucence");
-			if (!indexDirectory.exists()) {
-				indexDirectory.mkdirs();
-			}
+			indexDirectory = DirectoryReader.open(FSDirectory.open(Paths.get(configurationService.getWorkDir().getAbsolutePath() + "/lucence")));
+
+			// Lock it
+			indexLock = NativeFSLockFactory.INSTANCE.obtainLock(indexDirectory.directory(), "onionCrawler");
 
 			//Index writer
-			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(Version.LUCENE_4_10_1, new SimpleAnalyzer());
+			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(new SimpleAnalyzer());
 			indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-			indexWriter = new IndexWriter(FSDirectory.open(indexDirectory, lockFactory), indexWriterConfig);
+			indexWriter = new IndexWriter(indexDirectory.directory(), indexWriterConfig);
 			indexWriter.commit(); //In case of a new/empty index, this will create a new empty index
 
 			//Index reader
@@ -88,7 +85,7 @@ public class SearchServiceImpl implements SearchService {
 			persist(); //Make sure to persist any unwritten index changes before stopping
 			indexReader.close();
 			indexWriter.close();
-			lockFactory.clearLock("onionCrawler");
+			indexLock.close();
 		} catch (IOException ex) {
 			throw new OnionCrawlerException(ex);
 		}
@@ -117,7 +114,7 @@ public class SearchServiceImpl implements SearchService {
 
 	private synchronized void initIndexReaderAndSearcher() throws OnionCrawlerException {
 		try {
-			indexReader = DirectoryReader.open(FSDirectory.open(indexDirectory, lockFactory));
+			indexReader = DirectoryReader.open(indexDirectory.directory());
 			searcher = new IndexSearcher(indexReader);
 		} catch (IOException e) {
 			throw new OnionCrawlerException(e);

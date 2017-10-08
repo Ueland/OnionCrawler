@@ -5,7 +5,6 @@ import java.util.List;
 
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.IntField;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexableField;
@@ -15,6 +14,7 @@ public enum SearchField {
 	Hostname(Field.Store.YES, SearchFieldType.String),
 	PageTitle(Field.Store.YES, SearchFieldType.Text),
 	PageContent(Field.Store.NO, SearchFieldType.Text),;
+
 	private final Field.Store storeField;
 	private final SearchFieldType searchFieldType;
 
@@ -44,8 +44,6 @@ public enum SearchField {
 	public IndexableField getField(Object fieldValue) throws OnionCrawlerException {
 		if (getSearchFieldType() == SearchFieldType.String) {
 			return new StringField(name(), ((String) fieldValue).toLowerCase(), getStoreField());
-		} else if (getSearchFieldType() == SearchFieldType.Int) {
-			return new IntField(name(), (Integer) fieldValue, getStoreField());
 		} else if (getSearchFieldType() == SearchFieldType.Text) {
 			return new TextField(name(), ((String) fieldValue).toLowerCase(), getStoreField());
 		} else {
