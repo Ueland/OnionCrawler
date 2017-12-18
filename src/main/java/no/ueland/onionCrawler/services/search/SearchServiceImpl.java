@@ -23,9 +23,10 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TotalHitCountCollector;
-import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.Lock;
 import org.apache.lucene.store.NativeFSLockFactory;
+import org.apache.lucene.store.SimpleFSDirectory;
 
 @Singleton
 public class SearchServiceImpl implements SearchService {
@@ -39,7 +40,7 @@ public class SearchServiceImpl implements SearchService {
 	private boolean hasInitialized;
 	private IndexReader indexReader;
 	private Logger logger = Logger.getLogger(SearchServiceImpl.class);
-	private DirectoryReader indexDirectory;
+	private Directory indexDirectory;
 	private Lock indexLock;
 
 	@Override
@@ -50,15 +51,15 @@ public class SearchServiceImpl implements SearchService {
 
 		try {
 			//Index directory
-			indexDirectory = DirectoryReader.open(FSDirectory.open(Paths.get(configurationService.getWorkDir().getAbsolutePath() + "/lucence")));
+			indexDirectory = new SimpleFSDirectory(Paths.get(configurationService.getWorkDir().getAbsolutePath() + "/lucence"));
 
 			// Lock it
-			indexLock = NativeFSLockFactory.INSTANCE.obtainLock(indexDirectory.directory(), "onionCrawler");
+			indexLock = NativeFSLockFactory.INSTANCE.obtainLock(indexDirectory, "onionCrawler");
 
 			//Index writer
 			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(new SimpleAnalyzer());
 			indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-			indexWriter = new IndexWriter(indexDirectory.directory(), indexWriterConfig);
+			indexWriter = new IndexWriter(indexDirectory, indexWriterConfig);
 			indexWriter.commit(); //In case of a new/empty index, this will create a new empty index
 
 			//Index reader
@@ -149,7 +150,7 @@ public class SearchServiceImpl implements SearchService {
 
 	private synchronized void initIndexReaderAndSearcher() throws OnionCrawlerException {
 		try {
-			indexReader = DirectoryReader.open(indexDirectory.directory());
+			indexReader = DirectoryReader.open(indexDirectory);
 			searcher = new IndexSearcher(indexReader);
 		} catch (IOException e) {
 			throw new OnionCrawlerException(e);
