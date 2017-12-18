@@ -23,6 +23,7 @@ public class SearchServiceTest {
 	@Test
 	public void testAdd() throws OnionCrawlerException {
 		searchService.add(getTestDocument());
+		searchService.persist();
 	}
 
 	@Test
@@ -34,6 +35,7 @@ public class SearchServiceTest {
 	@Test
 	public void testRemove() throws OnionCrawlerException {
 		searchService.remove(getTestDocument().getURL());
+		searchService.persist();
 	}
 
 	private SearchDocument getTestDocument() {
