@@ -11,17 +11,20 @@ import no.ueland.onionCrawler.objects.search.SearchDocument;
 import no.ueland.onionCrawler.objects.search.SearchResult;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TotalHitCountCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.Lock;
@@ -35,7 +38,7 @@ public class SearchServiceImpl implements SearchService {
 	private ConfigurationService configurationService;
 	private IndexSearcher searcher;
 	private IndexWriter indexWriter;
-	private WhitespaceAnalyzer analyzer;
+	private Analyzer analyzer;
 	private QueryParser queryParser;
 	private boolean hasInitialized;
 	private IndexReader indexReader;
@@ -65,8 +68,11 @@ public class SearchServiceImpl implements SearchService {
 			//Index reader
 			initIndexReaderAndSearcher();
 
-			analyzer = new WhitespaceAnalyzer();
+			analyzer = new StandardAnalyzer();
 			queryParser = new QueryParser(SearchField.PageContent.name(), analyzer);
+			queryParser.setSplitOnWhitespace(true);
+			queryParser.setAutoGeneratePhraseQueries(true);
+			queryParser.setDefaultOperator(QueryParser.Operator.OR);
 
 			//Index searcher & query parser for the "ID"-field
 			//Run a simple test query and print to the log how many documents the index has available
@@ -113,9 +119,18 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchResult search(String query) throws OnionCrawlerException {
+	public SearchResult search(String searchTerms) throws OnionCrawlerException {
 		lazyInit();
-		return null;
+		SearchResult result = new SearchResult();
+		try {
+			Query query = queryParser.parse(searchTerms);
+			TopDocs hits = searcher.search(query, 25);
+			result.setTotalHits(result.getTotalHits());
+
+		} catch (IOException|ParseException e) {
+			throw new OnionCrawlerException(e);
+		}
+		return result;
 	}
 
 	@Override
