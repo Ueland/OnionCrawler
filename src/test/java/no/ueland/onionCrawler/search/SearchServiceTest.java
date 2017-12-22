@@ -1,6 +1,7 @@
 package no.ueland.onionCrawler.search;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 import com.google.inject.Inject;
@@ -10,6 +11,8 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.objects.search.SearchDocument;
 import no.ueland.onionCrawler.objects.search.SearchResult;
 import no.ueland.onionCrawler.services.search.SearchService;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,8 +23,8 @@ public class SearchServiceTest {
 	@Inject
 	private SearchService searchService;
 
-	@Test
-	public void testAdd() throws OnionCrawlerException {
+	@Before
+	public void before() throws OnionCrawlerException {
 		searchService.add(getTestDocument());
 		searchService.persist();
 	}
@@ -30,10 +33,11 @@ public class SearchServiceTest {
 	public void testSearch() throws OnionCrawlerException {
 		SearchResult result = searchService.search("fish");
 		assertThat(result, notNullValue());
+		assertThat(result.getTotalHits(), greaterThan(0));
 	}
 
-	@Test
-	public void testRemove() throws OnionCrawlerException {
+	@After
+	public void after() throws OnionCrawlerException {
 		searchService.remove(getTestDocument().getURL());
 		searchService.persist();
 	}
