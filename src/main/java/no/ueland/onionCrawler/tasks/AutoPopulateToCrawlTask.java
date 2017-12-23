@@ -24,7 +24,8 @@ public class AutoPopulateToCrawlTask implements Task {
 	private Logger logger = Logger.getLogger(getClass());
 	private Timer timer;
 	private String[] startURLs = {
-		"https://www.reddit.com/r/onions/top/?sort=top&t=month",
+		"https://www.nytimes3xbfgragh.onion/", // The New York Times
+		"https://www.reddit.com/r/onions/top/?sort=top&t=month" // Reddits onion discussion board
 	};
 
 	@Override
