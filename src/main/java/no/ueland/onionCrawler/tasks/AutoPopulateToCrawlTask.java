@@ -25,6 +25,8 @@ public class AutoPopulateToCrawlTask implements Task {
 	private Timer timer;
 	private String[] startURLs = {
 		"https://www.nytimes3xbfgragh.onion/", // The New York Times
+		"https://facebookcorewwwi.onion", // Facebook
+		"https://securedrop.org/directory", // List over SecureDrop instances
 		"https://www.reddit.com/r/onions/top/?sort=top&t=month" // Reddits onion discussion board
 	};
 
