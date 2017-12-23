@@ -30,10 +30,31 @@ public class SearchServiceTest {
 	}
 
 	@Test
-	public void testSearch() throws OnionCrawlerException {
+	public void testSearchPageTitleField() throws OnionCrawlerException {
+		SearchResult result = searchService.search("test");
+		assertThat(result, notNullValue());
+		assertThat(result.getTotalHits(), greaterThan(0l));
+	}
+
+	@Test
+	public void testSearchHostnameField() throws OnionCrawlerException {
+		SearchResult result = searchService.search("testbooktestwwwi");
+		assertThat(result, notNullValue());
+		assertThat(result.getTotalHits(), greaterThan(0l));
+	}
+
+	@Test
+	public void testSearcContentField() throws OnionCrawlerException {
 		SearchResult result = searchService.search("fish");
 		assertThat(result, notNullValue());
-		assertThat(result.getTotalHits(), greaterThan(0));
+		assertThat(result.getTotalHits(), greaterThan(0l));
+	}
+
+	@Test
+	public void testSearchURLField() throws OnionCrawlerException {
+		SearchResult result = searchService.search("test.foo");
+		assertThat(result, notNullValue());
+		assertThat(result.getTotalHits(), greaterThan(0l));
 	}
 
 	@After

@@ -1,13 +1,13 @@
 package no.ueland.onionCrawler.objects.search;
 
 public class SearchResult {
-	private int totalHits;
+	private long totalHits;
 
-	public int getTotalHits() {
+	public long getTotalHits() {
 		return totalHits;
 	}
 
-	public void setTotalHits(int totalHits) {
+	public void setTotalHits(long totalHits) {
 		this.totalHits = totalHits;
 	}
 }
