@@ -6,6 +6,11 @@ public class SearchDocument {
 	private String pageTitle;
 	private String pageContent;
 
+	@Override
+	public String toString() {
+		return URL+' '+hostname+' '+pageTitle+' '+pageContent;
+	}
+
 	public String getPageContent() {
 		return pageContent;
 	}

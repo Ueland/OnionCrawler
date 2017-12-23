@@ -38,7 +38,7 @@ public class SearchServiceTest {
 
 	@Test
 	public void testSearchHostnameField() throws OnionCrawlerException {
-		SearchResult result = searchService.search("testbooktestwwwi");
+		SearchResult result = searchService.search("\"testbooktestwwwi.onion\"");
 		assertThat(result, notNullValue());
 		assertThat(result.getTotalHits(), greaterThan(0l));
 	}
@@ -52,7 +52,7 @@ public class SearchServiceTest {
 
 	@Test
 	public void testSearchURLField() throws OnionCrawlerException {
-		SearchResult result = searchService.search("test.foo");
+		SearchResult result = searchService.search("\"http://testbooktestwwwi.onion/test.foo\"");
 		assertThat(result, notNullValue());
 		assertThat(result.getTotalHits(), greaterThan(0l));
 	}

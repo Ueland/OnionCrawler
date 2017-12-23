@@ -13,7 +13,8 @@ public enum SearchField {
 	URL(Field.Store.YES, SearchFieldType.String),
 	Hostname(Field.Store.YES, SearchFieldType.String),
 	PageTitle(Field.Store.YES, SearchFieldType.Text),
-	PageContent(Field.Store.NO, SearchFieldType.Text),
+	// Default Lucene field, all other fields are also copied into this field
+	Text(Field.Store.NO, SearchFieldType.Text),
 	;
 
 	private final Field.Store storeField;

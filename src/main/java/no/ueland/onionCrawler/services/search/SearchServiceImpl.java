@@ -69,7 +69,7 @@ public class SearchServiceImpl implements SearchService {
 			//Index reader
 			initIndexReaderAndSearcher();
 
-			queryParser = new QueryParser(SearchField.PageContent.name(), analyzer);
+			queryParser = new QueryParser(SearchField.Text.name(), analyzer);
 			queryParser.setSplitOnWhitespace(true);
 			queryParser.setAutoGeneratePhraseQueries(true);
 			queryParser.setDefaultOperator(QueryParser.Operator.OR);
@@ -110,7 +110,7 @@ public class SearchServiceImpl implements SearchService {
 		doc.add(SearchField.URL.getField(document.getURL()));
 		doc.add(SearchField.Hostname.getField(document.getHostname()));
 		doc.add(SearchField.PageTitle.getField(document.getPageTitle()));
-		doc.add(SearchField.PageContent.getField(document.getPageContent()));
+		doc.add(SearchField.Text.getField(document.toString()));
 		try {
 			indexWriter.addDocument(doc);
 		} catch (IOException e) {
@@ -124,6 +124,7 @@ public class SearchServiceImpl implements SearchService {
 		SearchResult result = new SearchResult();
 		try {
 			Query query = queryParser.parse(searchTerms);
+			logger.debug("Executing query: "+query.toString());
 			TopDocs hits = searcher.search(query, 25);
 			result.setTotalHits(hits.totalHits);
 
