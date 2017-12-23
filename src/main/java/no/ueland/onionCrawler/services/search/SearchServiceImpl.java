@@ -12,7 +12,6 @@ import no.ueland.onionCrawler.objects.search.SearchResult;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -52,6 +51,8 @@ public class SearchServiceImpl implements SearchService {
 			throw new OnionCrawlerException("Search engine already initialized");
 		}
 
+		analyzer = new StandardAnalyzer();
+
 		try {
 			//Index directory
 			indexDirectory = new SimpleFSDirectory(Paths.get(configurationService.getWorkDir().getAbsolutePath() + "/lucence"));
@@ -60,7 +61,7 @@ public class SearchServiceImpl implements SearchService {
 			indexLock = NativeFSLockFactory.INSTANCE.obtainLock(indexDirectory, "onionCrawler");
 
 			//Index writer
-			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(new SimpleAnalyzer());
+			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
 			indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
 			indexWriter = new IndexWriter(indexDirectory, indexWriterConfig);
 			indexWriter.commit(); //In case of a new/empty index, this will create a new empty index
@@ -68,7 +69,6 @@ public class SearchServiceImpl implements SearchService {
 			//Index reader
 			initIndexReaderAndSearcher();
 
-			analyzer = new StandardAnalyzer();
 			queryParser = new QueryParser(SearchField.PageContent.name(), analyzer);
 			queryParser.setSplitOnWhitespace(true);
 			queryParser.setAutoGeneratePhraseQueries(true);
@@ -125,7 +125,7 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			Query query = queryParser.parse(searchTerms);
 			TopDocs hits = searcher.search(query, 25);
-			result.setTotalHits(result.getTotalHits());
+			result.setTotalHits(hits.totalHits);
 
 		} catch (IOException|ParseException e) {
 			throw new OnionCrawlerException(e);
@@ -167,6 +167,9 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			indexReader = DirectoryReader.open(indexDirectory);
 			searcher = new IndexSearcher(indexReader);
+
+			int n = indexReader.getDocCount(SearchField.URL.name());
+			logger.info("Searched reloaded, index alive with "+n+" docs");
 		} catch (IOException e) {
 			throw new OnionCrawlerException(e);
 		}
