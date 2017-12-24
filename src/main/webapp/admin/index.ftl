@@ -8,10 +8,9 @@
 
 </div>
 
-
-
-
 <!-- /.col-lg-8 -->
+
+<!-- Tor connectivity status widget -->
 <div class="col-lg-4">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -26,6 +25,8 @@
 		</div>
 	</div>
 </div>
+
+<!-- Add URL widget -->
 <div class="col-lg-4">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -46,6 +47,20 @@
 					<p class="help-block">Example: http://foobar.onion</p>
 				</div>
 			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Quick stats widget -->
+<div class="col-lg-4">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-bell fa-fw"></i> Quick stats
+		</div>
+		<div class="panel-body">
+    This instance knows about ${knownHosts} onion hosts, have
+			indexed ${indexedPages} pages and have ${toCrawlSize} pages in the crawl queue.
+			queue.
 		</div>
 	</div>
 </div>
