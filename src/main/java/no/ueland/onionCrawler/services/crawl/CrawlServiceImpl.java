@@ -56,4 +56,9 @@ public class CrawlServiceImpl implements CrawlService {
 			throw new OnionCrawlerException(e);
 		}
 	}
+
+	@Override
+	public int count() throws OnionCrawlerException {
+		return DBUtil.getIntValue(this.db.getQueryRunner(), "SELECT COUNT(URL) FROM toCrawl");
+	}
 }

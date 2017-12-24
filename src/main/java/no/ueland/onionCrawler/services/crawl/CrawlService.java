@@ -12,11 +12,40 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
  */
 
 public interface CrawlService {
+
+	/**
+	 * Add a URL string to crawl
+	 * @param URL
+	 * @throws OnionCrawlerException
+	 */
 	void add(String URL) throws OnionCrawlerException;
 
+	/**
+	 * Add a ToCrawl object to crawl
+	 * @param todo
+	 * @throws OnionCrawlerException
+	 */
 	void add(ToCrawl todo) throws OnionCrawlerException;
 
+	/**
+	 * Get a ToCrawl object containing information
+	 * about a URL to crawl
+	 * @return
+	 * @throws OnionCrawlerException
+	 */
 	ToCrawl get() throws OnionCrawlerException;
 
+	/**
+	 * Remove a gvien ToCrawl object
+	 * @param obj
+	 * @throws OnionCrawlerException
+	 */
 	void remove(ToCrawl obj) throws OnionCrawlerException;
+
+	/**
+	 * Count the number of pages that is waiting to be crawled
+	 * @return
+	 * @throws OnionCrawlerException
+	 */
+	int count() throws OnionCrawlerException;
 }
