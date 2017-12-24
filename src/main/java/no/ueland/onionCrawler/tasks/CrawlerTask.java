@@ -88,7 +88,7 @@ public class CrawlerTask implements Task {
 
 		//Is URL banned?
 		if (banService.isBanned(todo.getURL())) {
-			logger.info(todo.getURL() + " i banned, skipping");
+			logger.info(todo.getURL() + " is banned, skipping");
 			return;
 		}
 

@@ -27,7 +27,7 @@ public class AutoPopulateToCrawlTask implements Task {
 		"https://www.nytimes3xbfgragh.onion/", // The New York Times
 		"https://facebookcorewwwi.onion", // Facebook
 		"https://securedrop.org/directory", // List over SecureDrop instances
-		"https://www.reddit.com/r/onions/top/?sort=top&t=month" // Reddits onion discussion board
+		"https://www.reddit.com/r/onions/top/?sort=top&t=month" // Reddit`s onion discussion board
 	};
 
 	@Override
@@ -42,7 +42,7 @@ public class AutoPopulateToCrawlTask implements Task {
 					logger.error(e.getMessage(), e);
 				}
 			}
-		}, 500, 3600 * 1000); //Check DB table status once per hour
+		}, 5000, 3600 * 1000); //Check DB table status once per hour
 	}
 
 	private void populateIfNeeded() throws OnionCrawlerException {
