@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.database.DatabaseService;
+import no.ueland.onionCrawler.utils.DBUtil;
 import org.apache.log4j.Logger;
 
 @Singleton
@@ -26,5 +27,10 @@ public class OnionHostServiceImpl implements OnionHostService {
 		} catch (Exception ex) {
 			throw new OnionCrawlerException(ex);
 		}
+	}
+
+	@Override
+	public int count() throws OnionCrawlerException {
+		return DBUtil.getIntValue(this.databaseService.getQueryRunner(), "SELECT COUNT(host) FROM onionHosts");
 	}
 }

@@ -9,5 +9,19 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
  * real IP via some basic tests.
  */
 public interface OnionHostService {
+
+	/**
+	 * Set online/offline status for a given host
+	 * @param host
+	 * @param online
+	 * @throws OnionCrawlerException
+	 */
 	void setStatus(String host, boolean online) throws OnionCrawlerException;
+
+	/**
+	 * Returns the total number of known onion hosts
+	 * @return
+	 * @throws OnionCrawlerException
+	 */
+	int count() throws OnionCrawlerException;
 }

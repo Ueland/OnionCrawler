@@ -22,12 +22,10 @@ CREATE TABLE IF NOT EXISTS `bannedDomains` (
 --
 
 CREATE TABLE IF NOT EXISTS `onionHosts` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `host` varchar(24) COLLATE utf8_bin NOT NULL,
   `lastChecked` datetime NOT NULL,
   `lastOnline` datetime DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `host` (`host`)
+  PRIMARY KEY (`host`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
