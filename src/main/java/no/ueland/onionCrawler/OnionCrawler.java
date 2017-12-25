@@ -1,10 +1,14 @@
 package no.ueland.onionCrawler;
 
+import javax.servlet.DispatcherType;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
+import com.britesnow.snow.web.SnowServlet;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.servlet.GuiceFilter;
 import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.services.configuration.ConfigurationService;
@@ -21,6 +25,7 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ErrorPageErrorHandler;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.MetaInfConfiguration;
@@ -31,7 +36,7 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 
 /**
  * Main class for OnionCrawler. Initializes everything and keeps everything
- * running until stopped. Supports gratial shutdown via SIGINT/SIGTERM
+ * running until stopped. Supports graceful shutdown via SIGINT/SIGTERM
  */
 public class OnionCrawler {
 
@@ -138,8 +143,19 @@ public class OnionCrawler {
 			// conform to the WAR layout.
 			context.setResourceBase(webDir);
 
+			// Hook up Guice and Snow to Jetty
+			context.addFilter(GuiceFilter.class, "/*", EnumSet.allOf(DispatcherType.class));
+			context.addServlet(SnowServlet.class, "/*");
+
+			// Set up location for error page(s)
+			ErrorPageErrorHandler errorHandler = new ErrorPageErrorHandler();
+			errorHandler.addErrorPage(404, "/error?code=404");
+			context.setErrorHandler(errorHandler);
+
+
 			// A WEB-INF/web.xml is required for Servlet 3.0
 			context.setDescriptor(webDir + "WEB-INF/web.xml");
+
 			// Initialize the various configurations required to auto-wire up
 			// the Servlet 3.0 annotations, descriptors, and fragments
 			context.setConfigurations(new Configuration[]{
