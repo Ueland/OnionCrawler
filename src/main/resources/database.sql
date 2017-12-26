@@ -9,7 +9,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `bannedDomains` (
-  `hostMd5Sum` int(11) NOT NULL,
+  `hostMd5Sum` varchar(32) NOT NULL,
   `added` datetime NOT NULL,
   `comment` text COLLATE utf8_bin NOT NULL,
   UNIQUE KEY `hostMd5Sum` (`hostMd5Sum`)
