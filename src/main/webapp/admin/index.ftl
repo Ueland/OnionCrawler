@@ -60,7 +60,6 @@
 		<div class="panel-body">
     This instance knows about ${knownHosts} onion hosts, have
 			indexed ${indexedPages} pages and have ${toCrawlSize} pages in the crawl queue.
-			queue.
 		</div>
 	</div>
 </div>
