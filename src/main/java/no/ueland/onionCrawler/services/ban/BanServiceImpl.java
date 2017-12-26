@@ -41,4 +41,13 @@ public class BanServiceImpl implements BanService {
 			}
 		}
 	}
+
+	@Override
+	public void removeMd5sum(String md5Hash) throws OnionCrawlerException {
+		try {
+			databaseService.getQueryRunner().update("DELETE FROM bannedDomains WHERE hostMd5Sum=?", md5Hash);
+		} catch (SQLException e) {
+			throw new OnionCrawlerException(e);
+		}
+	}
 }
