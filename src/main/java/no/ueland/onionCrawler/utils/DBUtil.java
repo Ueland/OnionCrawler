@@ -17,7 +17,7 @@ public class DBUtil {
 			Connection con = qr.getDataSource().getConnection();
 			PreparedStatement st = con.prepareStatement(SQL);
 			qr.fillStatement(st, params);
-			ResultSet data = st.executeQuery(SQL);
+			ResultSet data = st.executeQuery();
 			try {
 				data.next();
 				return data.getInt(1);
