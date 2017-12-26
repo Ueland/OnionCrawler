@@ -1,5 +1,8 @@
 package no.ueland.onionCrawler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.inject.AbstractModule;
 import no.ueland.onionCrawler.services.ban.BanService;
 import no.ueland.onionCrawler.services.ban.BanServiceImpl;
@@ -25,16 +28,21 @@ import no.ueland.onionCrawler.services.version.VersionServiceImpl;
 public class OnionCrawlerModule extends AbstractModule {
 	@Override
 	protected void configure() {
-		bind(ConfigurationService.class).to(ConfigurationServiceImpl.class).asEagerSingleton();
-		bind(HTTPFetcherService.class).to(HTTPFetcherServiceImpl.class).asEagerSingleton();
-		bind(RobotsTxtService.class).to(RobotsTxtServiceImpl.class).asEagerSingleton();
-		bind(DatabaseProvider.class).to(DatabaseProviderImpl.class).asEagerSingleton();
-		bind(OnionHostService.class).to(OnionHostServiceImpl.class).asEagerSingleton();
-		bind(DatabaseService.class).to(DatabaseServiceImpl.class).asEagerSingleton();
-		bind(VersionService.class).to(VersionServiceImpl.class).asEagerSingleton();
-		bind(SearchService.class).to(SearchServiceImpl.class).asEagerSingleton();
-		bind(CrawlService.class).to(CrawlServiceImpl.class).asEagerSingleton();
-		bind(BanService.class).to(BanServiceImpl.class).asEagerSingleton();
-		;
+		Map<Class<?>, Class<?>> serviceClasses = new HashMap<>();
+		serviceClasses.put(ConfigurationService.class, ConfigurationServiceImpl.class);
+		serviceClasses.put(HTTPFetcherService.class, HTTPFetcherServiceImpl.class);
+		serviceClasses.put(RobotsTxtService.class, RobotsTxtServiceImpl.class);
+		serviceClasses.put(DatabaseProvider.class, DatabaseProviderImpl.class);
+		serviceClasses.put(DatabaseService.class, DatabaseServiceImpl.class);
+		serviceClasses.put(OnionHostService.class, OnionHostServiceImpl.class);
+		serviceClasses.put(VersionService.class, VersionServiceImpl.class);
+		serviceClasses.put(SearchService.class, SearchServiceImpl.class);
+		serviceClasses.put(CrawlService.class, CrawlServiceImpl.class);
+		serviceClasses.put(BanService.class, BanServiceImpl.class);
+
+		for(Class o: serviceClasses.keySet()) {
+			requestStaticInjection(serviceClasses.get(o));
+			bind(o).to(serviceClasses.get(o)).asEagerSingleton();
+		}
 	}
 }
