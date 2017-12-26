@@ -34,16 +34,16 @@ import org.apache.lucene.store.SimpleFSDirectory;
 public class SearchServiceImpl implements SearchService {
 
 	@Inject
-	private ConfigurationService configurationService;
-	private IndexSearcher searcher;
-	private IndexWriter indexWriter;
-	private Analyzer analyzer;
-	private QueryParser queryParser;
-	private boolean hasInitialized;
-	private IndexReader indexReader;
-	private Logger logger = Logger.getLogger(SearchServiceImpl.class);
-	private Directory indexDirectory;
-	private Lock indexLock;
+	private static ConfigurationService configurationService;
+	private static IndexSearcher searcher;
+	private static IndexWriter indexWriter;
+	private static Analyzer analyzer;
+	private static QueryParser queryParser;
+	private static boolean hasInitialized;
+	private static IndexReader indexReader;
+	private static Logger logger = Logger.getLogger(SearchServiceImpl.class);
+	private static Directory indexDirectory;
+	private static Lock indexLock;
 
 	@Override
 	public void init() throws OnionCrawlerException {

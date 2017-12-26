@@ -24,13 +24,13 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 public class RobotsTxtServiceImpl implements RobotsTxtService {
 
 	@Inject
-	DatabaseService databaseService;
+	private static DatabaseService databaseService;
 	@Inject
-	OnionHostService onionHostService;
+	private static OnionHostService onionHostService;
 	@Inject
-	ConfigurationService configurationService;
+	private static ConfigurationService configurationService;
 	@Inject
-	HTTPFetcherService httpFetcherService;
+	private static HTTPFetcherService httpFetcherService;
 
 	@Override
 	public boolean canCrawl(String URL) throws OnionCrawlerException {

@@ -15,8 +15,8 @@ import org.apache.commons.io.FileUtils;
 public class VersionServiceImpl implements VersionService {
 
 	@Inject
-	private DatabaseService db;
-	private String version;
+	private static DatabaseService db;
+	private String version; // Equal String objects are not duplicated in the JVM, should not need to be static
 
 	public VersionServiceImpl() throws OnionCrawlerException {
 		try {

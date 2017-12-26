@@ -12,7 +12,7 @@ public class OnionHostServiceImpl implements OnionHostService {
 
 	private Logger logger = Logger.getLogger(getClass());
 	@Inject
-	private DatabaseService databaseService;
+	private static DatabaseService databaseService;
 
 	@Override
 	public void setStatus(String host, boolean online) throws OnionCrawlerException {

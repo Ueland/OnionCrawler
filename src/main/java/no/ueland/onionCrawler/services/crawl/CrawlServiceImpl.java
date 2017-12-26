@@ -14,7 +14,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 @Singleton
 public class CrawlServiceImpl implements CrawlService {
 	@Inject
-	DatabaseService db;
+	private static DatabaseService db;
 
 	@Override
 	public void add(String URL) throws OnionCrawlerException {

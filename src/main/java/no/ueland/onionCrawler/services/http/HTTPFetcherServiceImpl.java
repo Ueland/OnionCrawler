@@ -23,9 +23,9 @@ import no.ueland.onionCrawler.services.configuration.ConfigurationService;
 public class HTTPFetcherServiceImpl implements HTTPFetcherService {
 
 	@Inject
-	private ConfigurationService configurationService;
-	private long lastConnectivityCheck = 0;
-	private boolean lastConnectivityResult = false;
+	private static ConfigurationService configurationService;
+	private static long lastConnectivityCheck = 0;
+	private static boolean lastConnectivityResult = false;
 
 	@Override
 	public HTTPFetchResult fetch(URL URL, HTTPMethod method) throws OnionCrawlerException {

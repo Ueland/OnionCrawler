@@ -1,5 +1,11 @@
 package no.ueland.onionCrawler.services.configuration;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import com.google.inject.Singleton;
 import no.ueland.onionCrawler.enums.configuration.ConfigurationKey;
 import no.ueland.onionCrawler.objects.configuration.Configuration;
@@ -7,17 +13,11 @@ import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
 @Singleton
 public class ConfigurationServiceImpl implements ConfigurationService {
 
-	private final File workDir = new File("onionCrawler");
-	private final File configFile = new File(workDir.getAbsolutePath() + "/settings.ini");
+	private static final File workDir = new File("onionCrawler");
+	private static  final File configFile = new File(workDir.getAbsolutePath() + "/settings.ini");
 	Logger logger = Logger.getLogger(ConfigurationServiceImpl.class);
 
 	public ConfigurationServiceImpl() {
