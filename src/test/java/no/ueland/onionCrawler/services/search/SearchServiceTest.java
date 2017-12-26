@@ -1,4 +1,4 @@
-package no.ueland.onionCrawler.search;
+package no.ueland.onionCrawler.services.search;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
@@ -10,7 +10,6 @@ import no.ueland.onionCrawler.OnionCrawlerModule;
 import no.ueland.onionCrawler.objects.exception.OnionCrawlerException;
 import no.ueland.onionCrawler.objects.search.SearchDocument;
 import no.ueland.onionCrawler.objects.search.SearchResult;
-import no.ueland.onionCrawler.services.search.SearchService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -32,7 +32,7 @@ public class BanServiceImpl implements BanService {
 	@Override
 	public void addMd5sum(String md5Hash, String description) throws OnionCrawlerException {
 		// Already stored?
-		int storedRows = DBUtil.getIntValue(databaseService.getQueryRunner(), "SELECT COUNT(*) FROM bannedDomains WHERE hostMd5Sum = ?", md5Hash);
+		int storedRows = DBUtil.getIntValue(databaseService.getQueryRunner(), "SELECT COUNT(hostMd5Sum) FROM bannedDomains WHERE hostMd5Sum = ?", md5Hash);
 		if (storedRows == 0) {
 			try {
 				databaseService.getQueryRunner().update("INSERT INTO bannedDomains SET hostMd5Sum=?, added=NOW(), comment=?", md5Hash, description);
